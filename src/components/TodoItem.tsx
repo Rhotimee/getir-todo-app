@@ -1,15 +1,30 @@
 import React from 'react';
 import {
-  Text, Flex, IconButton, Box,
+  Text, IconButton, HStack, VStack,
 } from '@chakra-ui/react';
+import { connect } from 'react-redux';
 import { BsCircle, BsCheck } from 'react-icons/bs';
-import { Todo } from '../types/todo';
+import { AiOutlineFieldTime } from 'react-icons/ai';
+import formatDistance from 'date-fns/formatDistance';
+import { ShowTodoModal, State, Todo } from '../types/todo';
+import { updateTodoCompletionStatus, openTodoModal, closeTodoModal } from '../actions';
+import TodoModal from './TodoModal';
 
 interface TodoItemProps {
   todo: Todo;
+  dispatch: Function;
+  showTodoModal: ShowTodoModal;
 }
 
-function TodoItem({ todo }: TodoItemProps) {
+function TodoItem({ todo, dispatch, showTodoModal }: TodoItemProps) {
+  const onOpenTodoModal = () => {
+    dispatch(openTodoModal(todo));
+  };
+
+  const onCloseTodoModal = () => {
+    dispatch(closeTodoModal());
+  };
+
   const renderItemIconButton = () => {
     if (todo.completed) {
       return <BsCheck />;
@@ -17,32 +32,93 @@ function TodoItem({ todo }: TodoItemProps) {
     return <BsCircle />;
   };
 
+  const updateCompletionStatus = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    dispatch(updateTodoCompletionStatus(todo._id));
+  };
+
+  const renderTimeLeftToComplete = () => {
+    if (!todo.deadline) return '';
+
+    const timeLeft = formatDistance(
+      todo.deadline,
+      Date.now(),
+      { addSuffix: true },
+    );
+
+    return `Deadline ${timeLeft}`;
+  };
+
   return (
-    <Flex
-      alignItems="center"
+    <VStack
+      alignItems="flex-start"
       shadow="md"
       borderRadius={5}
       cursor="pointer"
       _hover={{ shadow: 'xl' }}
       paddingX={2}
       paddingY={4}
+      width="full"
+      onClick={onOpenTodoModal}
     >
-      <IconButton
-        aria-label="complete task"
-        icon={renderItemIconButton()}
-        size="lg"
-        variant="ghost"
-      />
-      <Box ml={4}>
-        <Text
-          fontSize="md"
-          textDecoration={todo.completed ? 'line-through' : ''}
+      <HStack
+        alignItems="flex-start"
+        justifyContent="flex-start"
+      >
+        <IconButton
+          aria-label="complete task"
+          icon={renderItemIconButton()}
+          size="lg"
+          variant="ghost"
+          minWidth={8}
+          height={8}
+          onClick={updateCompletionStatus}
+        />
+        <VStack ml={4} width="full" alignItems="flex-start">
+          <Text
+            fontSize="xl"
+            textDecoration={todo.completed ? 'line-through' : 'none'}
+            textTransform="capitalize"
+          >
+            {todo.title}
+          </Text>
+
+          {todo.detail && (
+          <Text
+            fontSize="md"
+            textDecoration={todo.completed ? 'line-through' : 'none'}
+          >
+            { todo.detail }
+          </Text>
+          )}
+        </VStack>
+      </HStack>
+      {todo.deadline && (
+        <HStack
+          alignItems="center"
+          pr={4}
+          width="full"
+          justifyContent="flex-end"
         >
-          {todo.title}
-        </Text>
-      </Box>
-    </Flex>
+          <AiOutlineFieldTime />
+          <Text fontSize="xs" ml="2">
+            { renderTimeLeftToComplete() }
+          </Text>
+        </HStack>
+      )}
+      {showTodoModal.selected && (
+        <TodoModal
+          isOpen={showTodoModal.isVisible}
+          onClose={onCloseTodoModal}
+          todo={showTodoModal.selected}
+        />
+      )}
+    </VStack>
   );
 }
 
-export default TodoItem;
+const mapStateToProps = (state: State) => ({
+  showTodoModal: state.showTodoModal,
+});
+
+export default connect(mapStateToProps)(TodoItem);

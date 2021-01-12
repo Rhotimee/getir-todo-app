@@ -12,7 +12,7 @@ function UnCompletedTodoList({ unCompletedTodos }: UnCompletedTodoListProps) {
     <VStack mt={6} spacing={4}>
       {unCompletedTodos.map(
         (todo: Todo): JSX.Element => (
-          <TodoItem todo={todo} />
+          <TodoItem todo={todo} key={todo._id} />
         ),
       )}
     </VStack>

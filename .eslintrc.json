@@ -14,12 +14,14 @@
         },
         "ecmaVersion": 12,
         "sourceType": "module",
-        "project": ["./tsconfig.json"]
+        "project": ["./tsconfig.json"],
+        "extraFileExtensions": [".css"]
     },
     "plugins": [
         "react",
         "@typescript-eslint"
     ],
     "rules": {
+        "no-underscore-dangle": "off"
     }
 }

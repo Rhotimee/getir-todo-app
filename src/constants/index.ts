@@ -1,0 +1,7 @@
+export const ADD_TODO = 'ADD_TODO';
+export const UPDATE_TODO_STATUS = 'UPDATE_TODO_STATUS';
+export const UPDATE_TODO_ITEM = 'UPDATE_TODO_ITEM';
+export const OPEN_TODO_MODAL = 'OPEN_TODO_MODAL';
+export const CLOSE_TODO_MODAL = 'CLOSE_TODO_MODAL';
+export const DELETE_TODO_ITEM = 'DELETE_TODO_ITEM';
+export const FETCH_TODO = 'FETCH_TODO';
