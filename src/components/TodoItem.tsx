@@ -2,14 +2,17 @@ import React from 'react';
 import {
   Text, Flex, IconButton, Box,
 } from '@chakra-ui/react';
+import { connect } from 'react-redux';
 import { BsCircle, BsCheck } from 'react-icons/bs';
 import { Todo } from '../types/todo';
+import { updateTodoCompletionStatus } from '../actions';
 
 interface TodoItemProps {
   todo: Todo;
+  dispatch: Function;
 }
 
-function TodoItem({ todo }: TodoItemProps) {
+function TodoItem({ todo, dispatch }: TodoItemProps) {
   const renderItemIconButton = () => {
     if (todo.completed) {
       return <BsCheck />;
@@ -33,6 +36,8 @@ function TodoItem({ todo }: TodoItemProps) {
         icon={renderItemIconButton()}
         size="lg"
         variant="ghost"
+        /* eslint no-underscore-dangle: 0 */
+        onClick={() => dispatch(updateTodoCompletionStatus(todo._id))}
       />
       <Box ml={4}>
         <Text
@@ -46,4 +51,4 @@ function TodoItem({ todo }: TodoItemProps) {
   );
 }
 
-export default TodoItem;
+export default connect()(TodoItem);

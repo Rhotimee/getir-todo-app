@@ -5,7 +5,11 @@ import {
 } from '@chakra-ui/react';
 import addTodo from '../actions';
 
-const AddTodo = ({ dispatch }: any) => {
+interface AddTodoProps {
+  dispatch: Function
+}
+
+const AddTodo = ({ dispatch }: AddTodoProps) => {
   const [todo, setTodo] = useState('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
