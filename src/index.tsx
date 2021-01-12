@@ -8,7 +8,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import todoApp from './reducers';
 
-const store = createStore(todoApp);
+const store = createStore(
+  todoApp,
+  // @ts-ignore
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
 
 ReactDOM.render(
   <React.StrictMode>

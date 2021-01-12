@@ -44,7 +44,6 @@ function UnCompletedTodoList({ completedTodos }: CompletedTodoListProps) {
         <VStack mt={6} spacing={4}>
           {completedTodos.map(
             (todo: Todo): JSX.Element => (
-              /* eslint no-underscore-dangle: 0 */
               <TodoItem todo={todo} key={todo._id} />
             ),
           )}

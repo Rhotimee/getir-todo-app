@@ -4,6 +4,7 @@ import {
   CLOSE_TODO_MODAL,
   OPEN_TODO_MODAL,
   UPDATE_TODO_STATUS,
+  UPDATE_TODO_ITEM,
 } from '../constants/index';
 
 export function addTodo(title: string) {
@@ -23,6 +24,13 @@ export function updateTodoCompletionStatus(id: string) {
     todoItem: {
       _id: id,
     },
+  };
+}
+
+export function updateTodoItem(todoItem: Todo) {
+  return {
+    type: UPDATE_TODO_ITEM,
+    todoItem,
   };
 }
 

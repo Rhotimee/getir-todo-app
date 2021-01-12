@@ -52,7 +52,6 @@ function TodoItem({ todo, dispatch, showTodoModal }: TodoItemProps) {
         icon={renderItemIconButton()}
         size="lg"
         variant="ghost"
-        /* eslint no-underscore-dangle: 0 */
         onClick={updateCompletionStatus}
       />
       <Box ml={4}>

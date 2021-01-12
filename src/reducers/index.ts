@@ -1,5 +1,5 @@
 import {
-  CLOSE_TODO_MODAL, UPDATE_TODO_STATUS, ADD_TODO, OPEN_TODO_MODAL,
+  CLOSE_TODO_MODAL, UPDATE_TODO_STATUS, ADD_TODO, OPEN_TODO_MODAL, UPDATE_TODO_ITEM,
 } from '../constants/index';
 
 import { State } from '../types/todo';
@@ -10,7 +10,6 @@ const initialState: State = {
     isVisible: false,
     selected: null,
   },
-
 };
 
 export default function todoApp(state = initialState, action: any): State {
@@ -34,7 +33,6 @@ export default function todoApp(state = initialState, action: any): State {
     }
 
     case UPDATE_TODO_STATUS: {
-      /* eslint no-underscore-dangle: 0 */
       const index = state.todoList.findIndex((todo) => todo._id === action.todoItem._id);
       const newTodoList = [...state.todoList];
       newTodoList[index].completed = !newTodoList[index].completed;
@@ -62,6 +60,17 @@ export default function todoApp(state = initialState, action: any): State {
           selected: null,
         },
       };
+
+    case UPDATE_TODO_ITEM: {
+      const index = state.todoList.findIndex((todo) => todo._id === action.todoItem._id);
+      const newTodoList = [...state.todoList];
+      newTodoList[index] = action.todoItem;
+
+      return {
+        ...state,
+        todoList: newTodoList,
+      };
+    }
 
     default:
       return state;

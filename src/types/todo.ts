@@ -2,6 +2,8 @@ export interface Todo {
   _id: string;
   title: string;
   completed: boolean;
+  detail?: string;
+  deadline?: Date[];
 }
 export interface State {
   todoList: Todo[];
