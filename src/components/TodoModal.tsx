@@ -36,7 +36,7 @@ function TodoModal({
 }: TodoModalProps) {
   const [title, setTitle] = useState(todo.title);
   const [detail, setDetail] = useState(todo.detail);
-  const [deadline, setDeadline] = useState(todo.deadline || Date.now());
+  const [deadline, setDeadline] = useState(todo.deadline);
 
   const handleSubmit = () => {
     const updatedTodo = {
@@ -44,6 +44,7 @@ function TodoModal({
       title,
       completed: todo.completed,
       detail,
+      deadline,
     };
 
     dispatch(updateTodoItem(updatedTodo));
@@ -65,6 +66,7 @@ function TodoModal({
               <CgDetailsLess />
               <Input
                 value={title}
+                isRequired
                 width={3 / 4}
                 textTransform="capitalize"
                 variant="flushed"
@@ -83,14 +85,22 @@ function TodoModal({
                 value={detail}
                 onChange={(event) => setDetail(event.target.value)}
               />
-              <Button
-                fontSize="sm"
-                leftIcon={<CgTime />}
-                variant="ghost"
-              >
-                Add Deadline
-              </Button>
-              <Flatpickr data-enable-time value={deadline} onChange={(d) => setDeadline(d)} />
+
+              <Flex alignItems="center">
+                <Tooltip label="Set deadline" aria-label="Set deadline">
+                  <IconButton
+                    aria-label="Deadline"
+                    fontSize="lg"
+                    icon={<CgTime />}
+                    variant="ghost"
+                  />
+                </Tooltip>
+                <Flatpickr
+                  data-enable-time
+                  value={deadline}
+                  onChange={(date) => setDeadline(date[0])}
+                />
+              </Flex>
             </ModalBody>
 
             <ModalFooter justifyContent="space-between">

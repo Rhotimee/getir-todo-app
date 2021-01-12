@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.flatpickr-input {
+  border: 1px solid;
+  border-color: inherit;
+  border-radius: 0.375rem;
+}
