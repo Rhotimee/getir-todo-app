@@ -1,6 +1,12 @@
-import { ADD_TODO, UPDATE_TODO_STATUS } from '../constants/index';
+import { Todo } from '../types/todo';
+import {
+  ADD_TODO,
+  CLOSE_TODO_MODAL,
+  OPEN_TODO_MODAL,
+  UPDATE_TODO_STATUS,
+} from '../constants/index';
 
-export default function addTodo(title: string) {
+export function addTodo(title: string) {
   return {
     type: ADD_TODO,
     todoItem: {
@@ -17,5 +23,18 @@ export function updateTodoCompletionStatus(id: string) {
     todoItem: {
       _id: id,
     },
+  };
+}
+
+export function openTodoModal(todoItem: Todo) {
+  return {
+    type: OPEN_TODO_MODAL,
+    todoItem,
+  };
+}
+
+export function closeTodoModal() {
+  return {
+    type: CLOSE_TODO_MODAL,
   };
 }

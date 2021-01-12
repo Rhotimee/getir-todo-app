@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {
   FormControl, Input, Button, Flex,
 } from '@chakra-ui/react';
-import addTodo from '../actions';
+import { addTodo } from '../actions';
 
 interface AddTodoProps {
   dispatch: Function

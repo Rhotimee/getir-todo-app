@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Box, Text } from '@chakra-ui/react';
 import { State, Todo } from '../types/todo';
-import UnCompletedTodoList from '../components/UnCompletedTodoList';
-import CompletedTodoList from '../components/CompletedTodoList';
+import UnCompletedTodoList from './UnCompletedTodoList';
+import CompletedTodoList from './CompletedTodoList';
 
 interface TodoListProps {
   todoList: Todo[];
