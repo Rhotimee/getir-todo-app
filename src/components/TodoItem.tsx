@@ -26,6 +26,7 @@ function TodoItem({ todo }: TodoItemProps) {
       _hover={{ shadow: 'xl' }}
       paddingX={2}
       paddingY={4}
+      width="full"
     >
       <IconButton
         aria-label="complete task"

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container } from '@chakra-ui/react';
 import Header from './components/Header';
-import AddTodo from './container/AddTodo';
-import TodoList from './container/TodoList';
+import AddTodo from './containers/AddTodo';
+import TodoList from './containers/TodoList';
 
 const App = () => (
   <Container my={10}>

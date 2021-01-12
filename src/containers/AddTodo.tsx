@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import {
   FormControl, Input, Button, Flex,
 } from '@chakra-ui/react';
+import addTodo from '../actions';
 
-const AddTodo = () => {
+const AddTodo = ({ dispatch }: any) => {
   const [todo, setTodo] = useState('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(todo);
+    dispatch(addTodo(todo));
     setTodo('');
   };
 
@@ -41,4 +43,4 @@ const AddTodo = () => {
   );
 };
 
-export default AddTodo;
+export default connect()(AddTodo);

@@ -1,43 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Box, Text } from '@chakra-ui/react';
-import { Todo } from '../types/todo';
+import { State, Todo } from '../types/todo';
 import UnCompletedTodoList from '../components/UnCompletedTodoList';
 import CompletedTodoList from '../components/CompletedTodoList';
 
-const todos: Todo[] = [
-  {
-    _id: '089',
-    title:
-      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita mollit',
-    completed: false,
-  },
-  {
-    _id: '189',
-    title:
-      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita mollit',
-    completed: false,
-  },
-  {
-    _id: '389',
-    title:
-      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita mollit',
-    completed: false,
-  },
-  {
-    _id: '289',
-    title:
-      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita mollit',
-    completed: true,
-  },
-  {
-    _id: '287',
-    title:
-      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita mollit',
-    completed: true,
-  },
-];
+interface TodoListProps {
+  todoList: Todo[];
+}
 
-const TodoList = () => {
+const TodoList = ({ todoList }: TodoListProps) => {
   const [completedTodos, setCompletedTodos] = useState<Todo[]>([]);
   const [unCompletedTodos, setUnCompletedTodos] = useState<Todo[]>([]);
 
@@ -45,7 +17,7 @@ const TodoList = () => {
     const tempCompletedTodos: [] | Todo = [];
     const tempUnCompletedTodos: [] | Todo = [];
 
-    todos.forEach((todo) => {
+    todoList.forEach((todo) => {
       if (todo.completed === true) {
         (tempCompletedTodos as Array<Todo>).push(todo);
       } else {
@@ -55,9 +27,9 @@ const TodoList = () => {
 
     setCompletedTodos(tempCompletedTodos);
     setUnCompletedTodos(tempUnCompletedTodos);
-  }, [todos]);
+  }, [todoList]);
 
-  if (todos.length === 0) {
+  if (todoList.length === 0) {
     return <Text>You have no task todo yet. Please add one. </Text>;
   }
 
@@ -69,4 +41,8 @@ const TodoList = () => {
   );
 };
 
-export default TodoList;
+const mapStateToProps = (state: State) => ({
+  todoList: state.todoList,
+});
+
+export default connect(mapStateToProps)(TodoList);

@@ -3,3 +3,12 @@ export interface Todo {
   title: string;
   completed: boolean;
 }
+
+export interface Action {
+  type: string;
+  todoItem: Todo;
+}
+
+export interface State {
+  todoList: Todo[];
+}
