@@ -5,6 +5,7 @@ import {
   OPEN_TODO_MODAL,
   UPDATE_TODO_STATUS,
   UPDATE_TODO_ITEM,
+  DELETE_TODO_ITEM,
 } from '../constants/index';
 
 export function addTodo(title: string) {
@@ -44,5 +45,12 @@ export function openTodoModal(todoItem: Todo) {
 export function closeTodoModal() {
   return {
     type: CLOSE_TODO_MODAL,
+  };
+}
+
+export function deleteTodoItem(todoId: string) {
+  return {
+    type: DELETE_TODO_ITEM,
+    todoId,
   };
 }

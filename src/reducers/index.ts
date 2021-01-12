@@ -1,5 +1,10 @@
 import {
-  CLOSE_TODO_MODAL, UPDATE_TODO_STATUS, ADD_TODO, OPEN_TODO_MODAL, UPDATE_TODO_ITEM,
+  CLOSE_TODO_MODAL,
+  UPDATE_TODO_STATUS,
+  ADD_TODO,
+  OPEN_TODO_MODAL,
+  UPDATE_TODO_ITEM,
+  DELETE_TODO_ITEM,
 } from '../constants/index';
 
 import { State } from '../types/todo';
@@ -65,6 +70,17 @@ export default function todoApp(state = initialState, action: any): State {
       const index = state.todoList.findIndex((todo) => todo._id === action.todoItem._id);
       const newTodoList = [...state.todoList];
       newTodoList[index] = action.todoItem;
+
+      return {
+        ...state,
+        todoList: newTodoList,
+      };
+    }
+
+    case DELETE_TODO_ITEM: {
+      const newTodoList = state.todoList.filter(
+        (todo) => todo._id !== action.todoId,
+      );
 
       return {
         ...state,

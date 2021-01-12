@@ -22,7 +22,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/airbnb.css';
 import { Todo } from '../types/todo';
-import { updateTodoItem } from '../actions';
+import { deleteTodoItem, updateTodoItem } from '../actions';
 
 interface TodoModalProps {
   isOpen: boolean
@@ -47,6 +47,11 @@ function TodoModal({
     };
 
     dispatch(updateTodoItem(updatedTodo));
+    onClose();
+  };
+
+  const handleTodoDelete = () => {
+    dispatch(deleteTodoItem(todo._id));
     onClose();
   };
 
@@ -95,7 +100,7 @@ function TodoModal({
                   colorScheme="red"
                   aria-label="Delete task"
                   icon={<RiDeleteBin6Line />}
-                  onClick={onClose}
+                  onClick={handleTodoDelete}
                 />
               </Tooltip>
               <Button
