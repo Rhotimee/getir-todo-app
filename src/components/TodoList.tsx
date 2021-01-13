@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Box, Text } from '@chakra-ui/react';
+import {
+  Box, Stack, Text, Skeleton,
+} from '@chakra-ui/react';
 import { State, Todo } from '../types/todo';
 import UnCompletedTodoList from './UnCompletedTodoList';
 import CompletedTodoList from './CompletedTodoList';
@@ -31,7 +33,13 @@ const TodoList = ({ todoList, loading }: TodoListProps) => {
   }, [todoList]);
 
   if (loading) {
-    return <Text>Loading....</Text>;
+    return (
+      <Stack mt={6}>
+        <Skeleton height="20px" />
+        <Skeleton height="20px" />
+        <Skeleton height="20px" />
+      </Stack>
+    );
   }
 
   if (todoList.length === 0) {

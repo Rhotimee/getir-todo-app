@@ -1,4 +1,5 @@
 export const ADD_TODO = 'ADD_TODO';
+export const ADD_NEW_TODO = 'ADD_NEW_TODO';
 export const UPDATE_TODO_STATUS = 'UPDATE_TODO_STATUS';
 export const UPDATE_TODO_ITEM = 'UPDATE_TODO_ITEM';
 export const OPEN_TODO_MODAL = 'OPEN_TODO_MODAL';
@@ -7,3 +8,4 @@ export const DELETE_TODO_ITEM = 'DELETE_TODO_ITEM';
 export const LOAD_TODO_LIST = 'LOAD_TODO_LIST';
 export const RENDER_TODO_LIST = 'RENDER_TODO_LIST';
 export const TODO_LIST_LOADING = 'TODO_LIST_LOADING';
+export const UPDATE_LOADING = 'UPDATE_LOADING';

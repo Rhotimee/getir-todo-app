@@ -59,7 +59,7 @@ function TodoModal({
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
+        <ModalOverlay background="rgba(0, 0, 0, 0.1)" />
         <ModalContent>
           <form onSubmit={handleSubmit}>
             <ModalHeader display="flex" alignItems="center">

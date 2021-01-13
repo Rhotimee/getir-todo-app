@@ -8,6 +8,7 @@ export interface Todo {
 export interface State {
   todoList: TodoList;
   showTodoModal: ShowTodoModal;
+  loading: boolean;
 }
 
 export interface ShowTodoModal {

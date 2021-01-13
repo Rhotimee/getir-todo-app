@@ -1,12 +1,13 @@
 import {
   CLOSE_TODO_MODAL,
   UPDATE_TODO_STATUS,
-  ADD_TODO,
   OPEN_TODO_MODAL,
   UPDATE_TODO_ITEM,
   DELETE_TODO_ITEM,
   RENDER_TODO_LIST,
   TODO_LIST_LOADING,
+  ADD_NEW_TODO,
+  UPDATE_LOADING,
 } from '../constants/index';
 
 import { State } from '../types/todo';
@@ -21,11 +22,12 @@ const initialState: State = {
     isVisible: false,
     selected: null,
   },
+  loading: false,
 };
 
 export default function todoApp(state = initialState, action: any): State {
   switch (action.type) {
-    case ADD_TODO: {
+    case ADD_NEW_TODO: {
       const todoListData = [
         {
           ...action.todoItem,
@@ -122,6 +124,12 @@ export default function todoApp(state = initialState, action: any): State {
           ...state.todoList,
           loading: action.loadingStatus,
         },
+      };
+
+    case UPDATE_LOADING:
+      return {
+        ...state,
+        loading: action.loading,
       };
 
     default:
