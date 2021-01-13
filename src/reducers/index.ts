@@ -3,11 +3,11 @@ import {
   UPDATE_TODO_STATUS,
   OPEN_TODO_MODAL,
   RENDER_UPDATED_TODO,
-  DELETE_TODO_ITEM,
   RENDER_TODO_LIST,
   TODO_LIST_LOADING,
   RENDER_NEW_TODO,
   UPDATE_LOADING,
+  REMOVE_DELETED_TODO,
 } from '../constants/index';
 
 import { State } from '../types/todo';
@@ -92,7 +92,7 @@ export default function todoApp(state = initialState, action: any): State {
       };
     }
 
-    case DELETE_TODO_ITEM: {
+    case REMOVE_DELETED_TODO: {
       const newTodoListData = state.todoList.data.filter(
         (todo) => todo._id !== action.todoId,
       );

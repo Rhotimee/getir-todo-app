@@ -10,6 +10,8 @@ import {
   RENDER_NEW_TODO,
   UPDATE_TODO_ITEM,
   RENDER_UPDATED_TODO,
+  REMOVE_DELETED_TODO,
+  DELETE_TODO_ITEM,
 } from '../constants/index';
 import Axios from '../helpers/axiosInstance';
 
@@ -43,10 +45,17 @@ function* updateTodo(action: any) {
   ]);
 }
 
+function* deleteTodo(action: any) {
+  const route = `/${action.todoId}`;
+  yield put({ type: REMOVE_DELETED_TODO, todoId: action.todoId });
+  yield call(Axios.delete, route);
+}
+
 export default function* rootSaga() {
   yield all([
     yield takeEvery(LOAD_TODO_LIST, fetchTodoList),
     yield takeEvery(ADD_NEW_TODO, addNewTodo),
     yield takeEvery(UPDATE_TODO_ITEM, updateTodo),
+    yield takeEvery(DELETE_TODO_ITEM, deleteTodo),
   ]);
 }

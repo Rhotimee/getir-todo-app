@@ -19,11 +19,11 @@ import {
 import { connect } from 'react-redux';
 import { CgDetailsLess, CgDetailsMore, CgTime } from 'react-icons/cg';
 import { AiOutlineSave } from 'react-icons/ai';
-import { RiDeleteBin6Line } from 'react-icons/ri';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/airbnb.css';
 import { State, Todo } from '../types/todo';
 import { deleteTodoItem, updateTodoItem } from '../actions';
+import DeletePopover from './DeletePopover';
 
 interface TodoModalProps {
   isOpen: boolean
@@ -110,15 +110,9 @@ function TodoModal({
             </ModalBody>
 
             <ModalFooter justifyContent="space-between">
-              <Tooltip label="Delete task" aria-label="Delete task">
-                <IconButton
-                  variant="outline"
-                  colorScheme="red"
-                  aria-label="Delete task"
-                  icon={<RiDeleteBin6Line />}
-                  onClick={handleTodoDelete}
-                />
-              </Tooltip>
+              <DeletePopover
+                onConfirm={handleTodoDelete}
+              />
               <Button
                 type="submit"
                 colorScheme="blue"
