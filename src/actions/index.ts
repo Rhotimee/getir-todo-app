@@ -1,6 +1,6 @@
 import { Todo } from '../types/todo';
 import {
-  ADD_TODO,
+  ADD_NEW_TODO,
   CLOSE_TODO_MODAL,
   OPEN_TODO_MODAL,
   UPDATE_TODO_STATUS,
@@ -11,7 +11,7 @@ import {
 
 export function addTodo(title: string) {
   return {
-    type: ADD_TODO,
+    type: ADD_NEW_TODO,
     todoItem: {
       title,
       completed: false,

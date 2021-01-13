@@ -42,7 +42,12 @@ const AddTodo = ({ dispatch, loading }: AddTodoProps) => {
             borderLeftRadius={0}
             disabled={loading}
           >
-            {loading ? <Spinner /> : 'Add todo'}
+            {loading ? (
+              <Flex>
+                Posting
+                <Spinner ml="5" />
+              </Flex>
+            ) : 'Add todo'}
           </Button>
         </Flex>
       </FormControl>

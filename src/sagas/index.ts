@@ -2,7 +2,14 @@ import {
   all, call, put, takeEvery,
 } from 'redux-saga/effects';
 import {
-  LOAD_TODO_LIST, RENDER_TODO_LIST, TODO_LIST_LOADING, UPDATE_LOADING, ADD_TODO, ADD_NEW_TODO,
+  LOAD_TODO_LIST,
+  RENDER_TODO_LIST,
+  TODO_LIST_LOADING,
+  UPDATE_LOADING,
+  ADD_NEW_TODO,
+  RENDER_NEW_TODO,
+  UPDATE_TODO_ITEM,
+  RENDER_UPDATED_TODO,
 } from '../constants/index';
 import Axios from '../helpers/axiosInstance';
 
@@ -21,7 +28,17 @@ function* addNewTodo(action: any) {
   yield put({ type: UPDATE_LOADING, loading: true });
   const response = yield call(Axios.post, route, action.todoItem);
   yield all([
-    put({ type: ADD_NEW_TODO, todoItem: response.data }),
+    put({ type: RENDER_NEW_TODO, todoItem: response.data }),
+    put({ type: UPDATE_LOADING, loading: false }),
+  ]);
+}
+
+function* updateTodo(action: any) {
+  const route = `/${action.todoItem._id}`;
+  yield put({ type: UPDATE_LOADING, loading: true });
+  const response = yield call(Axios.put, route, action.todoItem);
+  yield all([
+    put({ type: RENDER_UPDATED_TODO, todoItem: response.data }),
     put({ type: UPDATE_LOADING, loading: false }),
   ]);
 }
@@ -29,6 +46,7 @@ function* addNewTodo(action: any) {
 export default function* rootSaga() {
   yield all([
     yield takeEvery(LOAD_TODO_LIST, fetchTodoList),
-    yield takeEvery(ADD_TODO, addNewTodo),
+    yield takeEvery(ADD_NEW_TODO, addNewTodo),
+    yield takeEvery(UPDATE_TODO_ITEM, updateTodo),
   ]);
 }

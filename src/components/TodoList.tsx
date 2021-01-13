@@ -11,13 +11,13 @@ import { closeTodoModal } from '../actions';
 
 interface TodoListProps {
   todoList: Todo[];
-  loading: boolean;
   dispatch: Function;
   showTodoModal: ShowTodoModal;
+  todoListLoading: boolean;
 }
 
 const TodoList = ({
-  todoList, loading, dispatch, showTodoModal,
+  todoList, dispatch, showTodoModal, todoListLoading,
 }: TodoListProps) => {
   const [completedTodos, setCompletedTodos] = useState<Todo[]>([]);
   const [unCompletedTodos, setUnCompletedTodos] = useState<Todo[]>([]);
@@ -38,12 +38,11 @@ const TodoList = ({
     setUnCompletedTodos(tempUnCompletedTodos);
   }, [todoList]);
 
-  if (loading) {
+  if (todoListLoading) {
+    const numberOfSkeletons = 5;
     return (
       <Stack mt={6}>
-        <Skeleton height="20px" />
-        <Skeleton height="20px" />
-        <Skeleton height="20px" />
+        {Array.from(Array(numberOfSkeletons).keys()).map((key) => <Skeleton height="100px" key={key} />)}
       </Stack>
     );
   }
@@ -73,7 +72,7 @@ const TodoList = ({
 
 const mapStateToProps = (state: State) => ({
   todoList: state.todoList.data,
-  loading: state.todoList.loading,
+  todoListLoading: state.todoList.loading,
   showTodoModal: state.showTodoModal,
 });
 

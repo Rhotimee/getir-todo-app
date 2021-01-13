@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { BsCircle, BsCheck } from 'react-icons/bs';
 import { AiOutlineFieldTime } from 'react-icons/ai';
 import formatDistance from 'date-fns/formatDistance';
+import { parseISO } from 'date-fns';
 import { Todo } from '../types/todo';
 import { updateTodoCompletionStatus, openTodoModal } from '../actions';
 
@@ -35,7 +36,7 @@ function TodoItem({ todo, dispatch }: TodoItemProps) {
     if (!todo.deadline) return '';
 
     const timeLeft = formatDistance(
-      todo.deadline,
+      parseISO(todo.deadline.toString()),
       Date.now(),
       { addSuffix: true },
     );
