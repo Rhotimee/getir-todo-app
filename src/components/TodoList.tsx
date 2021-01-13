@@ -7,9 +7,10 @@ import CompletedTodoList from './CompletedTodoList';
 
 interface TodoListProps {
   todoList: Todo[];
+  loading: boolean;
 }
 
-const TodoList = ({ todoList }: TodoListProps) => {
+const TodoList = ({ todoList, loading }: TodoListProps) => {
   const [completedTodos, setCompletedTodos] = useState<Todo[]>([]);
   const [unCompletedTodos, setUnCompletedTodos] = useState<Todo[]>([]);
 
@@ -29,6 +30,10 @@ const TodoList = ({ todoList }: TodoListProps) => {
     setUnCompletedTodos(tempUnCompletedTodos);
   }, [todoList]);
 
+  if (loading) {
+    return <Text>Loading....</Text>;
+  }
+
   if (todoList.length === 0) {
     return <Text>You have no task todo yet. Please add one. </Text>;
   }
@@ -42,7 +47,8 @@ const TodoList = ({ todoList }: TodoListProps) => {
 };
 
 const mapStateToProps = (state: State) => ({
-  todoList: state.todoList,
+  todoList: state.todoList.data,
+  loading: state.todoList.loading,
 });
 
 export default connect(mapStateToProps)(TodoList);

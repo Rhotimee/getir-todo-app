@@ -6,11 +6,17 @@ export interface Todo {
   deadline?: Date;
 }
 export interface State {
-  todoList: Todo[];
+  todoList: TodoList;
   showTodoModal: ShowTodoModal;
 }
 
 export interface ShowTodoModal {
   isVisible: boolean;
   selected: null | Todo;
+}
+
+export interface TodoList {
+  loading: boolean;
+  error: boolean;
+  data: Todo[];
 }

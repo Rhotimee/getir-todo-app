@@ -5,12 +5,18 @@ import {
   OPEN_TODO_MODAL,
   UPDATE_TODO_ITEM,
   DELETE_TODO_ITEM,
+  RENDER_TODO_LIST,
+  TODO_LIST_LOADING,
 } from '../constants/index';
 
 import { State } from '../types/todo';
 
 const initialState: State = {
-  todoList: [],
+  todoList: {
+    data: [],
+    loading: false,
+    error: false,
+  },
   showTodoModal: {
     isVisible: false,
     selected: null,
@@ -20,16 +26,19 @@ const initialState: State = {
 export default function todoApp(state = initialState, action: any): State {
   switch (action.type) {
     case ADD_TODO: {
-      const todoList = [
+      const todoListData = [
         {
           ...action.todoItem,
         },
-        ...state.todoList,
+        ...state.todoList.data,
       ];
 
       return {
         ...state,
-        todoList,
+        todoList: {
+          ...state.todoList,
+          data: todoListData,
+        },
         showTodoModal: {
           isVisible: true,
           selected: action.todoItem,
@@ -38,13 +47,16 @@ export default function todoApp(state = initialState, action: any): State {
     }
 
     case UPDATE_TODO_STATUS: {
-      const index = state.todoList.findIndex((todo) => todo._id === action.todoItem._id);
-      const newTodoList = [...state.todoList];
-      newTodoList[index].completed = !newTodoList[index].completed;
+      const index = state.todoList.data.findIndex((todo) => todo._id === action.todoItem._id);
+      const newTodoListData = [...state.todoList.data];
+      newTodoListData[index].completed = !newTodoListData[index].completed;
 
       return {
         ...state,
-        todoList: newTodoList,
+        todoList: {
+          ...state.todoList,
+          data: newTodoListData,
+        },
       };
     }
 
@@ -67,26 +79,50 @@ export default function todoApp(state = initialState, action: any): State {
       };
 
     case UPDATE_TODO_ITEM: {
-      const index = state.todoList.findIndex((todo) => todo._id === action.todoItem._id);
-      const newTodoList = [...state.todoList];
-      newTodoList[index] = action.todoItem;
+      const index = state.todoList.data.findIndex((todo) => todo._id === action.todoItem._id);
+      const newTodoListData = [...state.todoList.data];
+      newTodoListData[index] = action.todoItem;
 
       return {
         ...state,
-        todoList: newTodoList,
+        todoList: {
+          ...state.todoList,
+          data: newTodoListData,
+        },
       };
     }
 
     case DELETE_TODO_ITEM: {
-      const newTodoList = state.todoList.filter(
+      const newTodoListData = state.todoList.data.filter(
         (todo) => todo._id !== action.todoId,
       );
 
       return {
         ...state,
-        todoList: newTodoList,
+        todoList: {
+          ...state.todoList,
+          data: newTodoListData,
+        },
       };
     }
+
+    case RENDER_TODO_LIST:
+      return {
+        ...state,
+        todoList: {
+          ...state.todoList,
+          data: action.todoList,
+        },
+      };
+
+    case TODO_LIST_LOADING:
+      return {
+        ...state,
+        todoList: {
+          ...state.todoList,
+          loading: action.loadingStatus,
+        },
+      };
 
     default:
       return state;

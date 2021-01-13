@@ -6,6 +6,7 @@ import {
   UPDATE_TODO_STATUS,
   UPDATE_TODO_ITEM,
   DELETE_TODO_ITEM,
+  LOAD_TODO_LIST,
 } from '../constants/index';
 
 export function addTodo(title: string) {
@@ -52,5 +53,11 @@ export function deleteTodoItem(todoId: string) {
   return {
     type: DELETE_TODO_ITEM,
     todoId,
+  };
+}
+
+export function loadTodoList() {
+  return {
+    type: LOAD_TODO_LIST,
   };
 }
