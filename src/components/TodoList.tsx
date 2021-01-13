@@ -3,16 +3,22 @@ import { connect } from 'react-redux';
 import {
   Box, Stack, Text, Skeleton,
 } from '@chakra-ui/react';
-import { State, Todo } from '../types/todo';
+import { ShowTodoModal, State, Todo } from '../types/todo';
 import UnCompletedTodoList from './UnCompletedTodoList';
 import CompletedTodoList from './CompletedTodoList';
+import TodoModal from './TodoModal';
+import { closeTodoModal } from '../actions';
 
 interface TodoListProps {
   todoList: Todo[];
   loading: boolean;
+  dispatch: Function;
+  showTodoModal: ShowTodoModal;
 }
 
-const TodoList = ({ todoList, loading }: TodoListProps) => {
+const TodoList = ({
+  todoList, loading, dispatch, showTodoModal,
+}: TodoListProps) => {
   const [completedTodos, setCompletedTodos] = useState<Todo[]>([]);
   const [unCompletedTodos, setUnCompletedTodos] = useState<Todo[]>([]);
 
@@ -46,10 +52,21 @@ const TodoList = ({ todoList, loading }: TodoListProps) => {
     return <Text>You have no task todo yet. Please add one. </Text>;
   }
 
+  const onCloseTodoModal = () => {
+    dispatch(closeTodoModal());
+  };
+
   return (
     <Box>
       <UnCompletedTodoList unCompletedTodos={unCompletedTodos} />
       <CompletedTodoList completedTodos={completedTodos} />
+      {showTodoModal.selected && (
+        <TodoModal
+          isOpen={showTodoModal.isVisible}
+          onClose={onCloseTodoModal}
+          todo={showTodoModal.selected}
+        />
+      )}
     </Box>
   );
 };
@@ -57,6 +74,7 @@ const TodoList = ({ todoList, loading }: TodoListProps) => {
 const mapStateToProps = (state: State) => ({
   todoList: state.todoList.data,
   loading: state.todoList.loading,
+  showTodoModal: state.showTodoModal,
 });
 
 export default connect(mapStateToProps)(TodoList);
