@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 const Axios = axios.create({
-  baseURL: 'https://some-domain.com/api/',
+  baseURL: 'https://simple-todo-nest.herokuapp.com/todos',
   timeout: 1000,
-  headers: { 'X-Custom-Header': 'foobar' },
 });
 
 export default Axios;

@@ -5,9 +5,9 @@ import { LOAD_TODO_LIST, RENDER_TODO_LIST, TODO_LIST_LOADING } from '../constant
 import Axios from '../helpers/axiosInstance';
 
 export function* fetchTodoList() {
-  const endpoint = 'https://simple-todo-nest.herokuapp.com/todos';
+  const route = '/';
   yield put({ type: TODO_LIST_LOADING, loadingStatus: true });
-  const response = yield call(Axios, endpoint);
+  const response = yield call(Axios, route);
   yield all([
     put({ type: RENDER_TODO_LIST, todoList: response.data }),
     put({ type: TODO_LIST_LOADING, loadingStatus: false }),
