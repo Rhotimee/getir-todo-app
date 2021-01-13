@@ -2,14 +2,16 @@ import {
   all, call, put, takeEvery,
 } from 'redux-saga/effects';
 import { LOAD_TODO_LIST, RENDER_TODO_LIST, TODO_LIST_LOADING } from '../constants/index';
+import Axios from '../helpers/axiosInstance';
 
 export function* fetchTodoList() {
   const endpoint = 'https://simple-todo-nest.herokuapp.com/todos';
   yield put({ type: TODO_LIST_LOADING, loadingStatus: true });
-  const response = yield call(fetch, endpoint);
-  const data = yield response.json();
-  yield put({ type: RENDER_TODO_LIST, todoList: data });
-  yield put({ type: TODO_LIST_LOADING, loadingStatus: false });
+  const response = yield call(Axios, endpoint);
+  yield all([
+    put({ type: RENDER_TODO_LIST, todoList: response.data }),
+    put({ type: TODO_LIST_LOADING, loadingStatus: false }),
+  ]);
 }
 
 export default function* rootSaga() {
