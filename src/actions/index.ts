@@ -19,11 +19,12 @@ export function addTodo(title: string) {
   };
 }
 
-export function updateTodoCompletionStatus(id: string) {
+export function updateTodoCompletionStatus(id: string, completed: boolean) {
   return {
     type: UPDATE_TODO_STATUS,
-    todoItem: {
-      _id: id,
+    payload: {
+      id,
+      completed,
     },
   };
 }

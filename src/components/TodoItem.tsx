@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import { BsCircle, BsCheck } from 'react-icons/bs';
-import { AiOutlineFieldTime } from 'react-icons/ai';
+import { AiOutlineExpandAlt, AiOutlineFieldTime } from 'react-icons/ai';
 import formatDistance from 'date-fns/formatDistance';
 import { parseISO } from 'date-fns';
 import { Todo } from '../types/todo';
@@ -29,7 +29,7 @@ function TodoItem({ todo, dispatch }: TodoItemProps) {
 
   const updateCompletionStatus = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
-    dispatch(updateTodoCompletionStatus(todo._id));
+    dispatch(updateTodoCompletionStatus(todo._id, !todo.completed));
   };
 
   const renderTimeLeftToComplete = () => {
@@ -58,35 +58,49 @@ function TodoItem({ todo, dispatch }: TodoItemProps) {
     >
       <HStack
         alignItems="flex-start"
-        justifyContent="flex-start"
+        justifyContent="space-between"
+        width="full"
       >
+        <HStack
+          alignItems="flex-start"
+          justifyContent="flex-start"
+        >
+          <IconButton
+            aria-label="complete task"
+            icon={renderItemIconButton()}
+            size="lg"
+            variant="ghost"
+            minWidth={8}
+            height={8}
+            onClick={updateCompletionStatus}
+          />
+          <VStack ml={4} width="full" alignItems="flex-start">
+            <Text
+              fontSize="xl"
+              textDecoration={todo.completed ? 'line-through' : 'none'}
+              textTransform="capitalize"
+            >
+              {todo.title}
+            </Text>
+
+            {todo.detail && (
+            <Text
+              fontSize="md"
+              textDecoration={todo.completed ? 'line-through' : 'none'}
+            >
+              { todo.detail }
+            </Text>
+            )}
+          </VStack>
+        </HStack>
         <IconButton
-          aria-label="complete task"
-          icon={renderItemIconButton()}
+          aria-label="expand"
+          icon={<AiOutlineExpandAlt />}
           size="lg"
           variant="ghost"
           minWidth={8}
           height={8}
-          onClick={updateCompletionStatus}
         />
-        <VStack ml={4} width="full" alignItems="flex-start">
-          <Text
-            fontSize="xl"
-            textDecoration={todo.completed ? 'line-through' : 'none'}
-            textTransform="capitalize"
-          >
-            {todo.title}
-          </Text>
-
-          {todo.detail && (
-          <Text
-            fontSize="md"
-            textDecoration={todo.completed ? 'line-through' : 'none'}
-          >
-            { todo.detail }
-          </Text>
-          )}
-        </VStack>
       </HStack>
       {todo.deadline && (
         <HStack

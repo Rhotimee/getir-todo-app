@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  IconButton,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -12,11 +11,12 @@ import {
   HStack,
   Button,
   useDisclosure,
+  IconButton,
 } from '@chakra-ui/react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 
 interface DeletePopoverProps {
-  onConfirm: () => void
+  onConfirm: () => void,
 }
 
 const DeletePopover = ({ onConfirm }: DeletePopoverProps) => {

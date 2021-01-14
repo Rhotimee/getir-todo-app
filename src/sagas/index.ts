@@ -12,6 +12,8 @@ import {
   RENDER_UPDATED_TODO,
   REMOVE_DELETED_TODO,
   DELETE_TODO_ITEM,
+  RENDER_UPDATED_TODO_STATUS,
+  UPDATE_TODO_STATUS,
 } from '../constants/index';
 import Axios from '../helpers/axiosInstance';
 
@@ -47,8 +49,16 @@ function* updateTodo(action: any) {
 
 function* deleteTodo(action: any) {
   const route = `/${action.todoId}`;
-  yield put({ type: REMOVE_DELETED_TODO, todoId: action.todoId });
-  yield call(Axios.delete, route);
+  yield all([
+    put({ type: REMOVE_DELETED_TODO, todoId: action.todoId }),
+    call(Axios.delete, route),
+  ]);
+}
+
+function* updateTodoCompletionStatus(action: any) {
+  const route = `/${action.payload.id}`;
+  yield put({ type: RENDER_UPDATED_TODO_STATUS, todoId: action.payload.id });
+  yield call(Axios.put, route, { completed: action.payload.completed });
 }
 
 export default function* rootSaga() {
@@ -57,5 +67,6 @@ export default function* rootSaga() {
     yield takeEvery(ADD_NEW_TODO, addNewTodo),
     yield takeEvery(UPDATE_TODO_ITEM, updateTodo),
     yield takeEvery(DELETE_TODO_ITEM, deleteTodo),
+    yield takeEvery(UPDATE_TODO_STATUS, updateTodoCompletionStatus),
   ]);
 }

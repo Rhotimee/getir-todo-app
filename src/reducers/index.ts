@@ -1,6 +1,5 @@
 import {
   CLOSE_TODO_MODAL,
-  UPDATE_TODO_STATUS,
   OPEN_TODO_MODAL,
   RENDER_UPDATED_TODO,
   RENDER_TODO_LIST,
@@ -8,6 +7,7 @@ import {
   RENDER_NEW_TODO,
   UPDATE_LOADING,
   REMOVE_DELETED_TODO,
+  RENDER_UPDATED_TODO_STATUS,
 } from '../constants/index';
 
 import { State } from '../types/todo';
@@ -46,8 +46,8 @@ export default function todoApp(state = initialState, action: any): State {
       };
     }
 
-    case UPDATE_TODO_STATUS: {
-      const index = state.todoList.data.findIndex((todo) => todo._id === action.todoItem._id);
+    case RENDER_UPDATED_TODO_STATUS: {
+      const index = state.todoList.data.findIndex((todo) => todo._id === action.todoId);
       const newTodoListData = [...state.todoList.data];
       newTodoListData[index].completed = !newTodoListData[index].completed;
 
