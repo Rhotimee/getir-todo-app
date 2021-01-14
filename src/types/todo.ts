@@ -4,12 +4,12 @@ export interface Todo {
   completed: boolean;
   detail?: string;
   deadline?: Date;
+  username?: string;
 }
 export interface State {
   todoList: TodoList;
   showTodoModal: ShowTodoModal;
   loading: boolean;
-  username: string | null
 }
 
 export interface ShowTodoModal {

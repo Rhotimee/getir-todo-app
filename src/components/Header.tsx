@@ -15,8 +15,9 @@ import {
   Input,
 } from '@chakra-ui/react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { BsFillLockFill } from 'react-icons/bs';
-import { updateUsername } from '../actions';
+import { loadTodoList } from '../actions';
 
 interface HeaderProps {
   dispatch: Function
@@ -25,18 +26,28 @@ interface HeaderProps {
 const Header = ({ dispatch }: HeaderProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [val, setVal] = useState('');
+  const history = useHistory();
+  const { pathname } = history.location;
+  const username = pathname.substring(1);
 
   return (
     <>
       <HStack justifyContent="space-between">
-        <Heading fontSize={['xl', '2xl', '3xl']}>General List</Heading>
+        <Heading fontSize={['xl', '2xl', '3xl']} textTransform="capitalize">
+          {pathname === '/' ? 'General List' : `${username}'s List`}
+        </Heading>
         <Button
           fontSize={['sm', 'md']}
           borderRadius={20}
           onClick={onOpen}
         >
           <BsFillLockFill />
-          <Text ml={3}>Create private list</Text>
+          <Text ml={3}>
+            Create
+            { username ? ' new' : ' private' }
+            {' '}
+            list
+          </Text>
         </Button>
       </HStack>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -44,12 +55,13 @@ const Header = ({ dispatch }: HeaderProps) => {
         <ModalContent>
           <form onSubmit={(e) => {
             e.preventDefault();
-            dispatch(updateUsername(val));
+            dispatch(loadTodoList(val));
+            history.push(val);
             setVal('');
             onClose();
           }}
           >
-            <ModalHeader>What is your username?</ModalHeader>
+            <ModalHeader>What is the private link name?</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <Input

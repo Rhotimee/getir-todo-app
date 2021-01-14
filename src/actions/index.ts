@@ -7,14 +7,14 @@ import {
   UPDATE_TODO_ITEM,
   DELETE_TODO_ITEM,
   LOAD_TODO_LIST,
-  UPDATE_USERNAME,
 } from '../constants/index';
 
-export function addTodo(title: string) {
+export function addTodo(title: string, username?: string | null) {
   return {
     type: ADD_NEW_TODO,
     todoItem: {
       title,
+      username,
       completed: false,
     },
   };
@@ -57,15 +57,9 @@ export function deleteTodoItem(todoId: string) {
   };
 }
 
-export function loadTodoList() {
+export function loadTodoList(username?: string) {
   return {
     type: LOAD_TODO_LIST,
-  };
-}
-
-export function updateUsername(username: string) {
-  return {
-    type: UPDATE_USERNAME,
     payload: {
       username,
     },
