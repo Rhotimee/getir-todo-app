@@ -38,7 +38,7 @@ const AddTodo = ({ dispatch, loading }: AddTodoProps) => {
         <Flex>
           <Input
             type="text"
-            placeholder="New Task"
+            placeholder="New Todo"
             value={todo}
             onChange={handleInputChange}
             borderRightRadius={0}

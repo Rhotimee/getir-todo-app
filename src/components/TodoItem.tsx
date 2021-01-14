@@ -55,6 +55,7 @@ function TodoItem({ todo, dispatch }: TodoItemProps) {
       paddingY={4}
       width="full"
       onClick={onOpenTodoModal}
+      data-testid="todo-item"
     >
       <HStack
         alignItems="flex-start"

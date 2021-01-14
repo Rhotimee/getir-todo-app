@@ -60,7 +60,7 @@ const TodoList = ({
   }
 
   if (todoList.length === 0) {
-    return <Text>You have no task todo yet. Please add one. </Text>;
+    return <Text data-testid="empty-todo-list">You have no task todo yet. Please add one. </Text>;
   }
 
   const onCloseTodoModal = () => {
@@ -68,7 +68,9 @@ const TodoList = ({
   };
 
   return (
-    <Box>
+    <Box
+      data-testid="todo-list"
+    >
       <UnCompletedTodoList unCompletedTodos={unCompletedTodos} />
       <CompletedTodoList completedTodos={completedTodos} />
       {showTodoModal.selected && (

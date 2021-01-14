@@ -63,7 +63,7 @@ function TodoModal({
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent data-testid="todo-item-modal">
           <form onSubmit={handleSubmit}>
             <ModalHeader display="flex" alignItems="center">
               <CgDetailsLess />
