@@ -16,61 +16,64 @@ import {
   UPDATE_TODO_STATUS,
 } from '../constants/index';
 import Axios from '../helpers/axiosInstance';
+import { Action } from '../types';
 
-function* fetchTodoList(action: any) {
+function* fetchTodoList(action: Action) {
   let route = '/';
   const { username } = action.payload;
   if (username) {
     route = `/private/${username}`;
   }
-  yield put({ type: TODO_LIST_LOADING, loadingStatus: true });
+  yield put({ type: TODO_LIST_LOADING, payload: { loadingStatus: true } });
   const response = yield call(Axios, route);
   yield all([
-    put({ type: RENDER_TODO_LIST, todoList: response.data }),
-    put({ type: TODO_LIST_LOADING, loadingStatus: false }),
+    put({ type: RENDER_TODO_LIST, payload: { todoList: response.data } }),
+    put({ type: TODO_LIST_LOADING, payload: { loadingStatus: false } }),
   ]);
 }
 
-function* addNewTodo(action: any) {
+function* addNewTodo(action: Action) {
   const route = '/';
-  yield put({ type: UPDATE_LOADING, loading: true });
-  const response = yield call(Axios.post, route, action.todoItem);
+  yield put({ type: UPDATE_LOADING, payload: { loading: true } });
+  const response = yield call(Axios.post, route, action.payload);
   yield all([
-    put({ type: RENDER_NEW_TODO, todoItem: response.data }),
-    put({ type: UPDATE_LOADING, loading: false }),
+    put({ type: RENDER_NEW_TODO, payload: { todoItem: response.data } }),
+    put({ type: UPDATE_LOADING, payload: { loading: false } }),
   ]);
 }
 
-function* updateTodo(action: any) {
-  const route = `/${action.todoItem._id}`;
-  yield put({ type: UPDATE_LOADING, loading: true });
-  const response = yield call(Axios.put, route, action.todoItem);
+function* updateTodo(action: Action) {
+  const route = `/${action.payload._id}`;
+  yield put({ type: UPDATE_LOADING, payload: { loading: true } });
+  const response = yield call(Axios.put, route, action.payload);
   yield all([
-    put({ type: RENDER_UPDATED_TODO, todoItem: response.data }),
-    put({ type: UPDATE_LOADING, loading: false }),
+    put({ type: RENDER_UPDATED_TODO, payload: { todoItem: response.data } }),
+    put({ type: UPDATE_LOADING, payload: { loading: false } }),
   ]);
 }
 
-function* deleteTodo(action: any) {
-  const route = `/${action.todoId}`;
+function* deleteTodo(action: Action) {
+  const { todoId } = action.payload;
+  const route = `/${todoId}`;
   yield all([
-    put({ type: REMOVE_DELETED_TODO, todoId: action.todoId }),
+    put({ type: REMOVE_DELETED_TODO, payload: { todoId } }),
     call(Axios.delete, route),
   ]);
 }
 
-function* updateTodoCompletionStatus(action: any) {
-  const route = `/${action.payload.id}`;
-  yield put({ type: RENDER_UPDATED_TODO_STATUS, todoId: action.payload.id });
-  yield call(Axios.put, route, { completed: action.payload.completed });
+function* updateTodoCompletionStatus(action: Action) {
+  const { id, completed } = action.payload;
+  const route = `/${id}`;
+  yield put({ type: RENDER_UPDATED_TODO_STATUS, payload: { todoId: id } });
+  yield call(Axios.put, route, { completed });
 }
 
 export default function* rootSaga() {
   yield all([
-    yield takeEvery(LOAD_TODO_LIST, fetchTodoList),
-    yield takeEvery(ADD_NEW_TODO, addNewTodo),
-    yield takeEvery(UPDATE_TODO_ITEM, updateTodo),
-    yield takeEvery(DELETE_TODO_ITEM, deleteTodo),
-    yield takeEvery(UPDATE_TODO_STATUS, updateTodoCompletionStatus),
+    takeEvery(LOAD_TODO_LIST, fetchTodoList),
+    takeEvery(ADD_NEW_TODO, addNewTodo),
+    takeEvery(UPDATE_TODO_ITEM, updateTodo),
+    takeEvery(DELETE_TODO_ITEM, deleteTodo),
+    takeEvery(UPDATE_TODO_STATUS, updateTodoCompletionStatus),
   ]);
 }

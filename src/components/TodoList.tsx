@@ -4,7 +4,7 @@ import {
   Box, Stack, Text, Skeleton,
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
-import { ShowTodoModal, State, Todo } from '../types/todo';
+import { ShowTodoModal, State, Todo } from '../types';
 import UnCompletedTodoList from './UnCompletedTodoList';
 import CompletedTodoList from './CompletedTodoList';
 import TodoModal from './TodoModal';

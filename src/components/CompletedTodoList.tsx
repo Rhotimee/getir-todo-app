@@ -3,7 +3,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { AiOutlineUp, AiOutlineDown } from 'react-icons/ai';
-import { Todo } from '../types/todo';
+import { Todo } from '../types';
 import TodoItem from './TodoItem';
 
 interface CompletedTodoListProps {

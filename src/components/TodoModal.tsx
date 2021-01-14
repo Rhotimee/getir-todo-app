@@ -21,7 +21,7 @@ import { CgDetailsLess, CgDetailsMore, CgTime } from 'react-icons/cg';
 import { AiOutlineSave } from 'react-icons/ai';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/airbnb.css';
-import { State, Todo } from '../types/todo';
+import { State, Todo } from '../types';
 import { deleteTodoItem, updateTodoItem } from '../actions';
 import DeletePopover from './DeletePopover';
 

@@ -22,3 +22,8 @@ export interface TodoList {
   error: boolean;
   data: Todo[];
 }
+
+export interface Action {
+  type: string,
+  payload: any
+}

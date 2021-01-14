@@ -1,4 +1,5 @@
-import { Todo } from '../types/todo';
+import { Action, Todo } from '../types/index';
+
 import {
   ADD_NEW_TODO,
   CLOSE_TODO_MODAL,
@@ -9,10 +10,10 @@ import {
   LOAD_TODO_LIST,
 } from '../constants/index';
 
-export function addTodo(title: string, username?: string | null) {
+export function addTodo(title: string, username?: string | null): Action {
   return {
     type: ADD_NEW_TODO,
-    todoItem: {
+    payload: {
       title,
       username,
       completed: false,
@@ -33,14 +34,14 @@ export function updateTodoCompletionStatus(id: string, completed: boolean) {
 export function updateTodoItem(todoItem: Todo) {
   return {
     type: UPDATE_TODO_ITEM,
-    todoItem,
+    payload: todoItem,
   };
 }
 
 export function openTodoModal(todoItem: Todo) {
   return {
     type: OPEN_TODO_MODAL,
-    todoItem,
+    payload: todoItem,
   };
 }
 
@@ -53,7 +54,9 @@ export function closeTodoModal() {
 export function deleteTodoItem(todoId: string) {
   return {
     type: DELETE_TODO_ITEM,
-    todoId,
+    payload: {
+      todoId,
+    },
   };
 }
 
