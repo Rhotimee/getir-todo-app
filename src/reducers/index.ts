@@ -8,6 +8,7 @@ import {
   UPDATE_LOADING,
   REMOVE_DELETED_TODO,
   RENDER_UPDATED_TODO_STATUS,
+  UPDATE_USERNAME,
 } from '../constants/index';
 
 import { State } from '../types/todo';
@@ -23,6 +24,7 @@ const initialState: State = {
     selected: null,
   },
   loading: false,
+  username: null,
 };
 
 export default function todoApp(state = initialState, action: any): State {
@@ -128,6 +130,12 @@ export default function todoApp(state = initialState, action: any): State {
       return {
         ...state,
         loading: action.loading,
+      };
+
+    case UPDATE_USERNAME:
+      return {
+        ...state,
+        username: action.payload.username,
       };
 
     default:

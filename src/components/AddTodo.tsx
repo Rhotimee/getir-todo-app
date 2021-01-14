@@ -34,6 +34,7 @@ const AddTodo = ({ dispatch, loading }: AddTodoProps) => {
             value={todo}
             onChange={handleInputChange}
             borderRightRadius={0}
+            autoFocus
           />
           <Button
             colorScheme="blue"

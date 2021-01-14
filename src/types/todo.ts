@@ -9,6 +9,7 @@ export interface State {
   todoList: TodoList;
   showTodoModal: ShowTodoModal;
   loading: boolean;
+  username: string | null
 }
 
 export interface ShowTodoModal {
