@@ -7,7 +7,7 @@ import { BsCircle, BsCheck } from 'react-icons/bs';
 import { AiOutlineExpandAlt, AiOutlineFieldTime } from 'react-icons/ai';
 import formatDistance from 'date-fns/formatDistance';
 import { parseISO } from 'date-fns';
-import { Todo } from '../types/todo';
+import { Todo } from '../types';
 import { updateTodoCompletionStatus, openTodoModal } from '../actions';
 
 interface TodoItemProps {

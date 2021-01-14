@@ -5,7 +5,7 @@ import {
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
 import { addTodo } from '../actions';
-import { State } from '../types/todo';
+import { State } from '../types';
 
 interface AddTodoProps {
   dispatch: Function,

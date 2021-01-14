@@ -10,7 +10,7 @@ import {
   RENDER_UPDATED_TODO_STATUS,
 } from '../constants/index';
 
-import { State } from '../types/todo';
+import { Action, State } from '../types';
 
 const initialState: State = {
   todoList: {
@@ -25,11 +25,11 @@ const initialState: State = {
   loading: false,
 };
 
-export default function todoApp(state = initialState, action: any): State {
+export default function todoApp(state = initialState, action: Action): State {
   switch (action.type) {
     case RENDER_NEW_TODO: {
       const todoListData = [
-        action.todoItem,
+        action.payload.todoItem,
         ...state.todoList.data,
       ];
 
@@ -41,13 +41,15 @@ export default function todoApp(state = initialState, action: any): State {
         },
         showTodoModal: {
           isVisible: true,
-          selected: action.todoItem,
+          selected: action.payload.todoItem,
         },
       };
     }
 
     case RENDER_UPDATED_TODO_STATUS: {
-      const index = state.todoList.data.findIndex((todo) => todo._id === action.todoId);
+      const index = state.todoList.data.findIndex(
+        (todo) => todo._id === action.payload.todoId,
+      );
       const newTodoListData = [...state.todoList.data];
       newTodoListData[index].completed = !newTodoListData[index].completed;
 
@@ -65,7 +67,7 @@ export default function todoApp(state = initialState, action: any): State {
         ...state,
         showTodoModal: {
           isVisible: true,
-          selected: action.todoItem,
+          selected: action.payload,
         },
       };
 
@@ -79,9 +81,11 @@ export default function todoApp(state = initialState, action: any): State {
       };
 
     case RENDER_UPDATED_TODO: {
-      const index = state.todoList.data.findIndex((todo) => todo._id === action.todoItem._id);
+      const index = state.todoList.data.findIndex(
+        (todo) => todo._id === action.payload.todoItem._id,
+      );
       const newTodoListData = [...state.todoList.data];
-      newTodoListData[index] = action.todoItem;
+      newTodoListData[index] = action.payload.todoItem;
 
       return {
         ...state,
@@ -94,7 +98,7 @@ export default function todoApp(state = initialState, action: any): State {
 
     case REMOVE_DELETED_TODO: {
       const newTodoListData = state.todoList.data.filter(
-        (todo) => todo._id !== action.todoId,
+        (todo) => todo._id !== action.payload.todoId,
       );
 
       return {
@@ -111,7 +115,7 @@ export default function todoApp(state = initialState, action: any): State {
         ...state,
         todoList: {
           ...state.todoList,
-          data: action.todoList,
+          data: action.payload.todoList,
         },
       };
 
@@ -120,14 +124,14 @@ export default function todoApp(state = initialState, action: any): State {
         ...state,
         todoList: {
           ...state.todoList,
-          loading: action.loadingStatus,
+          loading: action.payload.loadingStatus,
         },
       };
 
     case UPDATE_LOADING:
       return {
         ...state,
-        loading: action.loading,
+        loading: action.payload.loading,
       };
 
     default:
