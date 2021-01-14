@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
-  FormControl, Input, Button, Flex,
+  FormControl, Input, Button, Flex, Spinner,
 } from '@chakra-ui/react';
 import { addTodo } from '../actions';
+import { State } from '../types/todo';
 
 interface AddTodoProps {
-  dispatch: Function
+  dispatch: Function,
+  loading: boolean,
 }
 
-const AddTodo = ({ dispatch }: AddTodoProps) => {
+const AddTodo = ({ dispatch, loading }: AddTodoProps) => {
   const [todo, setTodo] = useState('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,8 +40,14 @@ const AddTodo = ({ dispatch }: AddTodoProps) => {
             isLoading={false}
             type="submit"
             borderLeftRadius={0}
+            disabled={loading}
           >
-            Add todo
+            {loading ? (
+              <Flex>
+                Posting
+                <Spinner ml="5" />
+              </Flex>
+            ) : 'Add todo'}
           </Button>
         </Flex>
       </FormControl>
@@ -47,4 +55,8 @@ const AddTodo = ({ dispatch }: AddTodoProps) => {
   );
 };
 
-export default connect()(AddTodo);
+const mapStateToProps = (state: State) => ({
+  loading: state.loading,
+});
+
+export default connect(mapStateToProps)(AddTodo);

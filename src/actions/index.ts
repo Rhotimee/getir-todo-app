@@ -1,29 +1,30 @@
 import { Todo } from '../types/todo';
 import {
-  ADD_TODO,
+  ADD_NEW_TODO,
   CLOSE_TODO_MODAL,
   OPEN_TODO_MODAL,
   UPDATE_TODO_STATUS,
   UPDATE_TODO_ITEM,
   DELETE_TODO_ITEM,
+  LOAD_TODO_LIST,
 } from '../constants/index';
 
 export function addTodo(title: string) {
   return {
-    type: ADD_TODO,
+    type: ADD_NEW_TODO,
     todoItem: {
-      _id: new Date().getTime(),
       title,
       completed: false,
     },
   };
 }
 
-export function updateTodoCompletionStatus(id: string) {
+export function updateTodoCompletionStatus(id: string, completed: boolean) {
   return {
     type: UPDATE_TODO_STATUS,
-    todoItem: {
-      _id: id,
+    payload: {
+      id,
+      completed,
     },
   };
 }
@@ -52,5 +53,11 @@ export function deleteTodoItem(todoId: string) {
   return {
     type: DELETE_TODO_ITEM,
     todoId,
+  };
+}
+
+export function loadTodoList() {
+  return {
+    type: LOAD_TODO_LIST,
   };
 }

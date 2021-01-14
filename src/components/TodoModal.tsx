@@ -14,31 +14,34 @@ import {
   Flex,
   IconButton,
   Tooltip,
+  Spinner,
 } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import { CgDetailsLess, CgDetailsMore, CgTime } from 'react-icons/cg';
 import { AiOutlineSave } from 'react-icons/ai';
-import { RiDeleteBin6Line } from 'react-icons/ri';
 import Flatpickr from 'react-flatpickr';
 import 'flatpickr/dist/themes/airbnb.css';
-import { Todo } from '../types/todo';
+import { State, Todo } from '../types/todo';
 import { deleteTodoItem, updateTodoItem } from '../actions';
+import DeletePopover from './DeletePopover';
 
 interface TodoModalProps {
   isOpen: boolean
   onClose: () => void
   todo: Todo,
-  dispatch: Function
+  dispatch: Function,
+  loading: boolean,
 }
 
 function TodoModal({
-  isOpen, onClose, todo, dispatch,
+  isOpen, onClose, todo, dispatch, loading,
 }: TodoModalProps) {
   const [title, setTitle] = useState(todo.title);
   const [detail, setDetail] = useState(todo.detail);
   const [deadline, setDeadline] = useState(todo.deadline);
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const updatedTodo = {
       _id: todo._id,
       title,
@@ -99,27 +102,25 @@ function TodoModal({
                   data-enable-time
                   value={deadline}
                   onChange={(date) => setDeadline(date[0])}
+                  options={{
+                    minDate: 'today',
+                  }}
                 />
               </Flex>
             </ModalBody>
 
             <ModalFooter justifyContent="space-between">
-              <Tooltip label="Delete task" aria-label="Delete task">
-                <IconButton
-                  variant="outline"
-                  colorScheme="red"
-                  aria-label="Delete task"
-                  icon={<RiDeleteBin6Line />}
-                  onClick={handleTodoDelete}
-                />
-              </Tooltip>
+              <DeletePopover
+                onConfirm={handleTodoDelete}
+              />
               <Button
                 type="submit"
                 colorScheme="blue"
                 mr={3}
                 rightIcon={<AiOutlineSave />}
+                disabled={loading}
               >
-                Update
+                {loading ? <Spinner /> : 'Update'}
               </Button>
             </ModalFooter>
           </form>
@@ -129,4 +130,8 @@ function TodoModal({
   );
 }
 
-export default connect()(TodoModal);
+const mapStateToProps = (state: State) => ({
+  loading: state.todoList.loading,
+});
+
+export default connect(mapStateToProps)(TodoModal);
