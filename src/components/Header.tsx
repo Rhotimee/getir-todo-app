@@ -40,6 +40,7 @@ const Header = ({ dispatch }: HeaderProps) => {
           fontSize={['sm', 'md']}
           borderRadius={20}
           onClick={onOpen}
+          data-testid="create-user-button"
         >
           <BsFillLockFill />
           <Text ml={3}>
@@ -50,9 +51,14 @@ const Header = ({ dispatch }: HeaderProps) => {
           </Text>
         </Button>
       </HStack>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent
+          data-testid="private-link-modal"
+        >
           <form onSubmit={(e) => {
             e.preventDefault();
             dispatch(loadTodoList(val));
@@ -65,6 +71,8 @@ const Header = ({ dispatch }: HeaderProps) => {
             <ModalCloseButton />
             <ModalBody>
               <Input
+                type="text"
+                data-testid="private-link-input"
                 onChange={(e) => setVal(e.target.value)}
                 value={val}
                 placeholder="username"
