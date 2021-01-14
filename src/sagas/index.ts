@@ -17,8 +17,12 @@ import {
 } from '../constants/index';
 import Axios from '../helpers/axiosInstance';
 
-function* fetchTodoList() {
-  const route = '/';
+function* fetchTodoList(action: any) {
+  let route = '/';
+  const { username } = action.payload;
+  if (username) {
+    route = `/private/${username}`;
+  }
   yield put({ type: TODO_LIST_LOADING, loadingStatus: true });
   const response = yield call(Axios, route);
   yield all([

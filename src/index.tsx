@@ -5,11 +5,10 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import './index.css';
-import App from './App';
+import Routes from './Routes';
 import reportWebVitals from './reportWebVitals';
 import todoApp from './reducers';
 import rootSaga from './sagas';
-import { loadTodoList } from './actions';
 
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -20,13 +19,12 @@ const store = createStore(
 );
 
 sagaMiddleware.run(rootSaga);
-store.dispatch(loadTodoList());
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ChakraProvider>
-        <App />
+        <Routes />
       </ChakraProvider>
     </Provider>
   </React.StrictMode>,

@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import {
   Box, Stack, Text, Skeleton,
 } from '@chakra-ui/react';
+import { useHistory } from 'react-router-dom';
 import { ShowTodoModal, State, Todo } from '../types/todo';
 import UnCompletedTodoList from './UnCompletedTodoList';
 import CompletedTodoList from './CompletedTodoList';
 import TodoModal from './TodoModal';
-import { closeTodoModal } from '../actions';
+import { closeTodoModal, loadTodoList } from '../actions';
 
 interface TodoListProps {
   todoList: Todo[];
@@ -21,6 +22,17 @@ const TodoList = ({
 }: TodoListProps) => {
   const [completedTodos, setCompletedTodos] = useState<Todo[]>([]);
   const [unCompletedTodos, setUnCompletedTodos] = useState<Todo[]>([]);
+
+  const { pathname } = useHistory().location;
+
+  useEffect(() => {
+    if (pathname === '/') {
+      dispatch(loadTodoList());
+    } else {
+      const username = pathname.substring(1);
+      dispatch(loadTodoList(username));
+    }
+  }, []);
 
   useEffect(() => {
     const tempCompletedTodos: [] | Todo = [];

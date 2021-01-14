@@ -9,11 +9,12 @@ import {
   LOAD_TODO_LIST,
 } from '../constants/index';
 
-export function addTodo(title: string) {
+export function addTodo(title: string, username?: string | null) {
   return {
     type: ADD_NEW_TODO,
     todoItem: {
       title,
+      username,
       completed: false,
     },
   };
@@ -56,8 +57,11 @@ export function deleteTodoItem(todoId: string) {
   };
 }
 
-export function loadTodoList() {
+export function loadTodoList(username?: string) {
   return {
     type: LOAD_TODO_LIST,
+    payload: {
+      username,
+    },
   };
 }

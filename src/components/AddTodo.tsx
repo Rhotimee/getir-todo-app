@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {
   FormControl, Input, Button, Flex, Spinner,
 } from '@chakra-ui/react';
+import { useHistory } from 'react-router-dom';
 import { addTodo } from '../actions';
 import { State } from '../types/todo';
 
@@ -14,9 +15,16 @@ interface AddTodoProps {
 const AddTodo = ({ dispatch, loading }: AddTodoProps) => {
   const [todo, setTodo] = useState('');
 
+  const { pathname } = useHistory().location;
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(addTodo(todo));
+    const username = pathname.substring(1);
+    if (username.length > 0) {
+      dispatch(addTodo(todo, username));
+    } else {
+      dispatch(addTodo(todo));
+    }
     setTodo('');
   };
 
@@ -34,6 +42,7 @@ const AddTodo = ({ dispatch, loading }: AddTodoProps) => {
             value={todo}
             onChange={handleInputChange}
             borderRightRadius={0}
+            autoFocus
           />
           <Button
             colorScheme="blue"
